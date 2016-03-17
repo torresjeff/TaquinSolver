@@ -23,7 +23,7 @@ public class ImageSplitter
      */
     public static void Split(String fileName, int r, int c) throws FileNotFoundException, IOException
     {
-        for (int i = 1; i < 10*10 - 1; ++i)
+        for (int i = 1; i < 10*10; ++i)
         {
             Path path = FileSystems.getDefault().getPath("images/", i + ".jpg");
             if (Files.exists(path))
@@ -32,45 +32,47 @@ public class ImageSplitter
             }
         }
         
-        
-        File file = new File("images/" + fileName); // La imagen está guardada en la carpeta "images"
-        FileInputStream fis = new FileInputStream(file);
-        BufferedImage image = ImageIO.read(fis); //leemos el archivo de la imagen
-        
-        int rows = r; //Numero de filas que deseamos
-        int cols = c; ////Numero de columnas que deseamos
-        int chunks = rows * cols - 1;
-
-        int chunkWidth = image.getWidth() / cols; // determina el tamaño del ancho
-        int chunkHeight = image.getHeight() / rows; // // determina el tamaño del alto
-        int count = 0;
-        BufferedImage imgs[] = new BufferedImage[chunks]; //Arreglo de imagenes que guarda las subimagenes
-        for (int x = 0; x < rows; x++)
+        if (!Files.exists(FileSystems.getDefault().getPath(fileName)))
         {
-            for (int y = 0; y < cols; y++)
-            {
-                if (x == rows-1 && y == cols-1)
-                {
-                    break;
-                }
-                else
-                {
-                    //Guardamos cada subimagen en un indice del arreglo
-                    imgs[count] = new BufferedImage(chunkWidth, chunkHeight, image.getType());
+            return;
+        }
+        
+        try {
+            File file = new File(/*"images/" + */fileName); // La imagen está guardada en la carpeta "images"
+            FileInputStream fis = new FileInputStream(file);
+            BufferedImage image = ImageIO.read(fis); //leemos el archivo de la imagen
+            
+            int rows = r; //Numero de filas que deseamos
+            int cols = c; ////Numero de columnas que deseamos
+            int chunks = rows * cols - 1;
+            
+            int chunkWidth = image.getWidth() / cols; // determina el tamaño del ancho
+            int chunkHeight = image.getHeight() / rows; // // determina el tamaño del alto
+            int count = 0;
+            BufferedImage imgs[] = new BufferedImage[chunks]; //Arreglo de imagenes que guarda las subimagenes
+            for (int x = 0; x < rows; x++) {
+                for (int y = 0; y < cols; y++) {
+                    if (x == rows - 1 && y == cols - 1) {
+                        break;
+                    } else {
+                        //Guardamos cada subimagen en un indice del arreglo
+                        imgs[count] = new BufferedImage(chunkWidth, chunkHeight, image.getType());
 
-                    // Dibuja la subimagen
-                    Graphics2D gr = imgs[count++].createGraphics();
-                    gr.drawImage(image, 0, 0, chunkWidth, chunkHeight, chunkWidth * y, chunkHeight * x, chunkWidth * y + chunkWidth, chunkHeight * x + chunkHeight, null);
-                    gr.dispose();
+                        // Dibuja la subimagen
+                        Graphics2D gr = imgs[count++].createGraphics();
+                        gr.drawImage(image, 0, 0, chunkWidth, chunkHeight, chunkWidth * y, chunkHeight * x, chunkWidth * y + chunkWidth, chunkHeight * x + chunkHeight, null);
+                        gr.dispose();
+                    }
                 }
             }
-        }
-        System.out.println("Splitting done");
+            System.out.println("Splitting done");
 
-        //Escribimos las subimagenes a archivos llamados de 1 hasta n*n - 1.
-        for (int i = 0; i < imgs.length; i++) {
-            ImageIO.write(imgs[i], "jpg", new File("images/" + (i+1) + ".jpg"));
+            //Escribimos las subimagenes a archivos llamados de 1 hasta n*n - 1.
+            for (int i = 0; i < imgs.length; i++) {
+                ImageIO.write(imgs[i], "jpg", new File("images/" + (i + 1) + ".jpg"));
+            }
+            System.out.println("Mini images created");
+        } catch (IOException iOException) {
         }
-        System.out.println("Mini images created");
     }
 }
