@@ -135,7 +135,7 @@ public class TaquinUI extends javax.swing.JFrame
     }*/
     
     /*
-        Botón 1, según el grid.
+        BotÃ³n 1, segÃºn el grid.
     */
     private void jButton0ActionPerformed(java.awt.event.ActionEvent evt) {
         // Si es instancia de JPanel significa que la puedo mover.
@@ -166,7 +166,7 @@ public class TaquinUI extends javax.swing.JFrame
     }
     
     /*
-        Botón 2, según el grid.
+        BotÃ³n 2, segÃºn el grid.
     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         // Si es instancia de JPanel significa que la puedo mover.
@@ -197,7 +197,7 @@ public class TaquinUI extends javax.swing.JFrame
     }
     
     /*
-        Botón 3, según el grid.
+        BotÃ³n 3, segÃºn el grid.
     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         // Si es instancia de JPanel significa que la puedo mover.
@@ -228,7 +228,7 @@ public class TaquinUI extends javax.swing.JFrame
     }
     
     /*
-        Botón 4, según el grid.
+        BotÃ³n 4, segÃºn el grid.
     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
         // Si es instancia de JPanel significa que la puedo mover.
@@ -259,7 +259,7 @@ public class TaquinUI extends javax.swing.JFrame
     }
     
     /*
-        Botón 5, según el grid.
+        BotÃ³n 5, segÃºn el grid.
     */
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
         // Si es instancia de JPanel significa que la puedo mover.
@@ -288,9 +288,9 @@ public class TaquinUI extends javax.swing.JFrame
             }
         }
     }
-    
+     
     /*
-        Botón 6, según el grid.
+        BotÃ³n 6, segÃºn el grid.
     */
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
         // Si es instancia de JPanel significa que la puedo mover.
@@ -321,7 +321,7 @@ public class TaquinUI extends javax.swing.JFrame
     }
     
     /*
-        Botón 7, según el grid.
+        BotÃ³n 7, segÃºn el grid.
     */
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {
         // Si es instancia de JPanel significa que la puedo mover.
@@ -352,7 +352,7 @@ public class TaquinUI extends javax.swing.JFrame
     }
     
     /*
-        Botón 8, según el grid.
+        BotÃ³n 8, segÃºn el grid.
     */
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {
         // Si es instancia de JPanel significa que la puedo mover.
@@ -383,7 +383,7 @@ public class TaquinUI extends javax.swing.JFrame
     }
     
     /*
-        Botón 9, según el grid.
+        BotÃ³n 9, segÃºn el grid.
     */
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {
         // Si es instancia de JPanel significa que la puedo mover.
@@ -414,7 +414,7 @@ public class TaquinUI extends javax.swing.JFrame
     }
     
     /*
-        Botón 10, según el grid.
+        BotÃ³n 10, segÃºn el grid.
     */
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {
         // Si es instancia de JPanel significa que la puedo mover.
@@ -445,7 +445,7 @@ public class TaquinUI extends javax.swing.JFrame
     }
     
     /*
-        Botón 11, según el grid.
+        BotÃ³n 11, segÃºn el grid.
     */
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {
         // Si es instancia de JPanel significa que la puedo mover.
@@ -476,7 +476,7 @@ public class TaquinUI extends javax.swing.JFrame
     }
     
     /*
-        Botón 12, según el grid.
+        BotÃ³n 12, segÃºn el grid.
     */
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {
         // Si es instancia de JPanel significa que la puedo mover.
@@ -507,7 +507,7 @@ public class TaquinUI extends javax.swing.JFrame
     }
     
     /*
-        Botón 13, según el grid.
+        BotÃ³n 13, segÃºn el grid.
     */
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {
         // Si es instancia de JPanel significa que la puedo mover.
@@ -538,7 +538,7 @@ public class TaquinUI extends javax.swing.JFrame
     }
     
     /*
-        Botón 14, según el grid.
+        BotÃ³n 14, segÃºn el grid.
     */
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {
         // Si es instancia de JPanel significa que la puedo mover.
@@ -569,7 +569,7 @@ public class TaquinUI extends javax.swing.JFrame
     }
     
     /*
-        Botón 15, según el grid.
+        BotÃ³n 15, segÃºn el grid.
     */
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {
         // Si es instancia de JPanel significa que la puedo mover.
