@@ -31,8 +31,6 @@ public class TaquinUI extends javax.swing.JFrame
         //TODO: ver GridBagLayout
         getContentPane().setLayout(new GridLayout(n, n));
         
-        this.setTitle("Taquin Solver");
-        
         for (int i = 0; i < (n * n)-1; ++i)
         {
             //Las imagenes son opcionales, se deben colocar en la carpeta "images" y su nombre debe ser "1", "2", ..., "n", y deben estar en formato "jpg".
@@ -618,17 +616,18 @@ public class TaquinUI extends javax.swing.JFrame
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Taquin Solver");
         setResizable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 714, Short.MAX_VALUE)
+            .addGap(0, 683, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 467, Short.MAX_VALUE)
+            .addGap(0, 427, Short.MAX_VALUE)
         );
 
         pack();
@@ -665,7 +664,7 @@ public class TaquinUI extends javax.swing.JFrame
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    ImageSplitter.Split("image.jpg", 4, 4);
+                    ImageSplitter.Split("download.jpg", 4, 4);
                 } catch (IOException ex) {
                     Logger.getLogger(TaquinUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
