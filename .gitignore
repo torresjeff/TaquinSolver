@@ -1,7 +1,7 @@
 [Bb]uild/
 *.class
 
-nbproject/
+nbproject/private/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
