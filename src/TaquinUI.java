@@ -1,8 +1,12 @@
 
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -12,7 +16,6 @@ import javax.swing.JPanel;
 
 public class TaquinUI extends javax.swing.JFrame
 {
-
     ArrayList<JButton> buttons;
     final int DISTANCE_X = 178;
     final int DISTANCE_Y = 116;
@@ -28,10 +31,16 @@ public class TaquinUI extends javax.swing.JFrame
         //TODO: ver GridBagLayout
         getContentPane().setLayout(new GridLayout(n, n));
         
+        this.setTitle("Taquin Solver");
+        
         for (int i = 0; i < (n * n)-1; ++i)
         {
-            //Las imagenes son opcionales, se deben colocar en la carpeta "imagenes" y su nombre debe ser "1", "2", ..., "n", y deben estar en formato "jpg".
-            buttons.add(new JButton(Integer.toString(i+1), new ImageIcon("imagenes/" + Integer.toString(i+1) + ".jpg")));
+            //Las imagenes son opcionales, se deben colocar en la carpeta "images" y su nombre debe ser "1", "2", ..., "n", y deben estar en formato "jpg".
+            JButton button = new JButton(Integer.toString(i+1), new StretchIcon("images/" + Integer.toString(i+1) + ".jpg"));
+            button.setPreferredSize(new Dimension(40, 40));
+            
+            buttons.add(button);
+            
             add(buttons.get(i));
         }
         
@@ -655,6 +664,11 @@ public class TaquinUI extends javax.swing.JFrame
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                try {
+                    ImageSplitter.Split("image.jpg", 4, 4);
+                } catch (IOException ex) {
+                    Logger.getLogger(TaquinUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 TaquinUI ui = new TaquinUI(4);
                 ui.setVisible(true);
             }
