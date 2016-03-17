@@ -14,11 +14,12 @@ import javax.swing.JButton;
  */
 public class TaquinButton extends JButton {
     private int m_Pos;
-    //private int[]
-    public TaquinButton(int pos, ImageIcon icon)
+    private int[][] m_Mat;
+    public TaquinButton(int pos, int[][] mat, ImageIcon icon)
     {
         super(Integer.toString(pos), icon);
         
         m_Pos = pos;
+        m_Mat = mat;
     }
 }
