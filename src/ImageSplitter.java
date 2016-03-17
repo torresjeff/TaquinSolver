@@ -15,7 +15,7 @@ public class ImageSplitter
 {
     /**
      * Dividir una imagen en r filas y c columnas.
-     * @param fileName nombre del archivo. El archivo debe estar guardado en la carpeta "imagenes" del proyecto. La imagen es opcional. Deben tener extension ".jpg".
+     * @param fileName nombre del archivo. El nombre debe ser el directorio absoluto (directorio + nombre de archivo).
      * @param r numero de filas para dividir la imagen
      * @param c numero de columnas para dividir la imagen
      * @throws FileNotFoundException
