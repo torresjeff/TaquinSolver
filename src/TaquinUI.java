@@ -1,18 +1,15 @@
 
-import java.awt.ComponentOrientation;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
-import javax.swing.Icon;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 
 public class TaquinUI extends javax.swing.JFrame
@@ -21,7 +18,7 @@ public class TaquinUI extends javax.swing.JFrame
     ArrayList<JButton> buttons;
     int[][] matrixGrid;
     Map<Integer,Map<Integer,Integer>> matrixButtons;
-    int n = 3;
+    int n = 10;
     
     /**
      * Inicializacion de la matriz: matrixGrid
@@ -51,13 +48,21 @@ public class TaquinUI extends javax.swing.JFrame
         
         initMatrix();
         
-        //TODO: ver GridBagLayout
+        
         getContentPane().setLayout(new GridLayout(n, n));
+        
+        
+        try {
+            //TODO: escoger image en runtime
+            ImageSplitter.Split("image.jpg", n, n);
+        } catch (IOException ex) {
+            Logger.getLogger(TaquinUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         for (int i = 0; i < (n * n)-1; ++i)
         {
             //Las imagenes son opcionales, se deben colocar en la carpeta "imagenes" y su nombre debe ser "1", "2", ..., "n", y deben estar en formato "jpg".
-            buttons.add(new JButton(Integer.toString(i+1), new ImageIcon("images/" + Integer.toString(i+1) + ".jpg")));
+            buttons.add(new JButton(Integer.toString(i+1), new StretchIcon("images/" + Integer.toString(i+1) + ".jpg")));
             buttons.get(i).addActionListener(new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
