@@ -57,7 +57,7 @@ public class TaquinUI extends javax.swing.JFrame
         for (int i = 0; i < (n * n)-1; ++i)
         {
             //Las imagenes son opcionales, se deben colocar en la carpeta "imagenes" y su nombre debe ser "1", "2", ..., "n", y deben estar en formato "jpg".
-            buttons.add(new JButton(Integer.toString(i+1), new ImageIcon("imagenes/" + Integer.toString(i+1) + ".jpg")));
+            buttons.add(new JButton(Integer.toString(i+1), new ImageIcon("images/" + Integer.toString(i+1) + ".jpg")));
             buttons.get(i).addActionListener(new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
