@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -63,8 +64,8 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
     public TaquinUI() {
         initComponents();
         buttons = new ArrayList<>();
-        //fileName = "images/download3.jpg";
-        fileName = "";
+        fileName = "images/download3.jpg";
+        //fileName = "";
         
         //Inicializar los paneles y sus botones
         JPanel contentPane;
@@ -124,12 +125,22 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
     
     private void addButtons()
     {
+        for (JButton b : buttons)
+        {
+            ImageIcon i = (ImageIcon) b.getIcon();
+            i.getImage().flush(); // Flush para clear el cache de la imagen. Sino se sigue mostrando la imagen anterior.
+        }
+        
+        buttons.clear();
+        
         try {
             //TODO: escoger imagen en runtime
             ImageSplitter.Split(fileName, n, n);
         } catch (IOException ex) {
             Logger.getLogger(TaquinUI.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
         
         for (int i = 0; i < (n * n)-1; ++i)
         {
@@ -143,6 +154,10 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
                     TaquinUI.this.buttonPerformed(e);
                 }
             });
+            /*JButton button = new TaquinButton(i, matrixGrid, matrixButtons, n, new StretchIcon("images/" + Integer.toString(i+1) + ".jpg"));
+            buttons.add(button);*/
+            
+            
             m_PanelGridTaquin.add(buttons.get(i));
         }
         
@@ -268,12 +283,11 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
                 File file = fc.getSelectedFile();
                 fileName = file.getAbsolutePath();
                 
-                try {
-                    ImageSplitter.Split(fileName, n, n);
-                    //repaint();
-                } catch (IOException ex) {
-                    Logger.getLogger(TaquinUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
+
+                resetGrid();
+                //ImageSplitter.Split(fileName, n, n);
+                //addButtons();
+                //repaint();
                 
                 System.out.println("Se escogió el archivo: " + fileName);
             }
