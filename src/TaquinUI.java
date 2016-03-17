@@ -21,7 +21,7 @@ public class TaquinUI extends javax.swing.JFrame
     ArrayList<JButton> buttons;
     int[][] matrixGrid;
     Map<Integer,Map<Integer,Integer>> matrixButtons;
-    int n = 4;
+    int n = 3;
     
     /**
      * Inicializacion de la matriz: matrixGrid
@@ -81,6 +81,7 @@ public class TaquinUI extends javax.swing.JFrame
             matrixGrid[y][x] = 0;
             matrixButtons.get(Integer.parseInt(button.getText())-1).clear();
             matrixButtons.get(Integer.parseInt(button.getText())-1).put(y-1,x);
+            button.setLocation(button.getX(), button.getY() - button.getHeight());  // Movimiento hacia arriba
         }else{
             if( x!=0 && matrixGrid[y][x-1]==0){ // Left
                 System.out.println("izquierda");
@@ -88,6 +89,7 @@ public class TaquinUI extends javax.swing.JFrame
                 matrixGrid[y][x] = 0;
                 matrixButtons.get(Integer.parseInt(button.getText())-1).clear();
                 matrixButtons.get(Integer.parseInt(button.getText())-1).put(y,x-1);
+                button.setLocation(button.getX() - button.getWidth(), button.getY());  // Movimiento hacia la izquierda
             }else{
                 if( y!=(n-1) && matrixGrid[y+1][x]==0){ // Down
                     System.out.println("abajo");
@@ -95,6 +97,7 @@ public class TaquinUI extends javax.swing.JFrame
                     matrixGrid[y][x] = 0;
                     matrixButtons.get(Integer.parseInt(button.getText())-1).clear();
                     matrixButtons.get(Integer.parseInt(button.getText())-1).put(y+1,x);
+                    button.setLocation(button.getX(), button.getY()+button.getHeight());  // Movimiento hacia abajo
                 }else{
                     if( x!=(n-1) && matrixGrid[y][x+1]==0){ // Right
                         System.out.println("derecha");
@@ -102,15 +105,10 @@ public class TaquinUI extends javax.swing.JFrame
                         matrixGrid[y][x] = 0;
                         matrixButtons.get(Integer.parseInt(button.getText())-1).clear();
                         matrixButtons.get(Integer.parseInt(button.getText())-1).put(y,x+1);
+                        button.setLocation(button.getX() + button.getWidth(), button.getY());  // Movimiento hacia la derecha
                     }
                 }
             }
-        }
-        for(int i = 0;i<n;i++){
-            for(int j = 0;j<n;j++){
-                System.out.print(matrixGrid[i][j]);
-            }
-            System.out.println("");
         }
     }
     
