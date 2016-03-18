@@ -450,7 +450,9 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
             System.out.print(i + " ");
         }
         System.out.println("");
-        solveTaquin(movimientos);
+        ThreadButton th = new ThreadButton(n, movimientos, m_Buttons, m_MatrixGrid, m_MatrixButtons);
+        th.start();
+        //solveTaquin(movimientos);
     }
 
     /**
@@ -461,15 +463,16 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
         
         //Agregar jugadores adicionales aqui
     }
+    
+    
 
-    private void solveTaquin(ArrayList<Integer> movimientos) {
+    private void solveTaquin(ArrayList<Integer> movimientos){
         
         for (int i = 0; i < movimientos.size(); ++i)
         {
             JButton button = m_Buttons.get(movimientos.get(i));
             int r = Integer.parseInt(button.getText())/n;
             int c = Integer.parseInt(button.getText())%n;
-            
             
             if( r!=0 && m_MatrixGrid[r-1][c]==-1){ // UP
             System.out.println("arriba");
@@ -494,6 +497,7 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
                         m_MatrixButtons.get(Integer.parseInt(button.getText())).clear();
                         m_MatrixButtons.get(Integer.parseInt(button.getText())).put(r+1,c);
                         button.setLocation(button.getX(), button.getY()+button.getHeight());  // Movimiento hacia abajo
+                        this.repaint();
                     }else{
                         if( c!=(n-1) && m_MatrixGrid[r][c+1]==-1){ // Right
                             System.out.println("derecha");
@@ -505,14 +509,6 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
                         }
                     }
                 }
-            }
-            
-            //TODO: ver los movimientos uno por uno
-            
-            try { 
-                Thread.sleep(1000); //Dejar un tiempo entre cada iteracion para poder ver los movimientos
-            } catch (InterruptedException ex) {
-                Logger.getLogger(TaquinUI.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
