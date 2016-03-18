@@ -75,7 +75,7 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
         
         for(int i = 0;i < n;i++){
             for(int j = 0;j<n;j++){
-                m_MatrixGrid[i][j] = (i*n)+j; //5 -> i=1,j=1
+                m_MatrixGrid[i][j] = (i*n)+j;
                 m_MatrixButtons.get(k).put(i, j);
                 k++;
             }
@@ -137,7 +137,7 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
         
         //COMBOBOX TAMAÑO TABLERO
         sizePanel.add(m_ComboSize = new JComboBox<>());
-        //m_ComboSize.setPreferredSize(new Dimension(30, 20));
+        
         for (int i = 2; i <= 10; ++i)
         {
             m_ComboSize.addItem(i);
@@ -165,7 +165,7 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
         playerPanel.add(m_ComboPlayer = new JComboBox<>());
         for (int i = 0; i < players.size(); ++i)
         {
-            m_ComboPlayer.addItem(/*"Player " + (i+1)*/players.get(i).getClass().getName());
+            m_ComboPlayer.addItem(players.get(i).getClass().getName());
         }
         m_ComboPlayer.setSelectedIndex(0);
         m_ComboPlayer.addActionListener(new ActionListener() {
@@ -443,7 +443,7 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
     private void solve() {
         ArrayList<Integer> movimientos = players.get(m_CurrentPlayer).solve(m_MatrixGrid, n);
         
-        System.out.print("Movimientos: ");
+        System.out.print("Movimientos para solucionar el tablero: ");
         
         for (Integer i : movimientos)
         {
