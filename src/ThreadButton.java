@@ -34,20 +34,11 @@ public class ThreadButton extends Thread implements Runnable{
         while(i < array.size()){
             JButton button = m_Buttons.get(array.get(i));
             
-            for (int j = 0; j < n; ++j)
-            {
-                for (int k = 0; k < n; ++k)
-                {
-                    System.out.print(m_MatrixGrid[j][k] + "\t");
-                }
-                System.out.println("");
-            }
-            
             Set<Integer> set = m_MatrixButtons.get(Integer.parseInt(button.getText())).keySet();
             int r = (Integer)(set.toArray())[0];
             int c = m_MatrixButtons.get(Integer.parseInt(button.getText())).get(r);
             
-            System.out.println("r="+r+",c="+c);
+            System.out.println(r+" "+c);
             
             if( r!=0 && m_MatrixGrid[r-1][c]==-1){ // UP
                 System.out.println("arriba");
