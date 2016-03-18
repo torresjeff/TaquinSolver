@@ -246,13 +246,13 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
                 }
             }
             
-            m_Buttons.clear();
+            //m_Buttons.clear();
             
             for (int i = 0; i < (n * n)-1; ++i)
             {
                 //Las imagenes son opcionales
                 JButton button = new JButton(Integer.toString(temp_array[i]-1), new StretchIcon("images/" + Integer.toString(temp_array[i]) + ".jpg"));
-                m_Buttons.add(button);
+                m_Buttons.set(temp_array[i]-1,button);
                 m_Buttons.get(i).addActionListener(new java.awt.event.ActionListener() {
                 //m_Buttons.get(i).addActionListener(new java.awt.event.ActionListener() {
                     @Override
@@ -262,7 +262,7 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
                 });
 
                 
-                m_PanelGridTaquin.add(m_Buttons.get(i));
+                m_PanelGridTaquin.add(m_Buttons.get(temp_array[i]-1));
                 
                 m_MatrixButtons.get(Integer.parseInt(button.getText())).clear();
                 m_MatrixButtons.get(Integer.parseInt(button.getText())).put(i/n,i%n);
@@ -449,7 +449,8 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
             System.out.print(i + " ");
         }
         System.out.println("");
-        solveTaquin(movimientos);
+        ThreadButton th = new ThreadButton(n, movimientos, m_Buttons, m_MatrixGrid, m_MatrixButtons);
+        th.start();
     }
 
     /**
