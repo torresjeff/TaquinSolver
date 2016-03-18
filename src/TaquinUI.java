@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import static java.lang.Math.random;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +20,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import java.util.Random;
 
 
 public class TaquinUI extends javax.swing.JFrame implements ActionListener
@@ -110,7 +112,7 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
         m_PanelOptions.setLayout(new BoxLayout(m_PanelOptions, BoxLayout.Y_AXIS));
         contentPane.add(m_PanelOptions);
         
-        resetGrid();
+        resetGrid(true);
         
         initOptionsMenu();
     }
@@ -145,7 +147,7 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
             @Override
             public void actionPerformed(ActionEvent e) {
                 n = (Integer)m_ComboSize.getSelectedItem();
-                TaquinUI.this.resetGrid();
+                TaquinUI.this.resetGrid(true);
                 System.out.println("Se escogio el tamaño: " + n);
             }
         });
@@ -170,7 +172,7 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
             @Override
             public void actionPerformed(ActionEvent e) {
                 TaquinUI.this.m_CurrentPlayer = m_ComboPlayer.getSelectedIndex();
-                TaquinUI.this.resetGrid();
+                TaquinUI.this.resetGrid(true);
                 System.out.println("Se escogio el tamaño: " + n);
             }
         });
@@ -185,42 +187,92 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
         
         m_FileChooser = new JFileChooser();
         m_FileChooser.setCurrentDirectory(new File("images/")); //El file chooser se abre por defecto en la carpeta "images/"
+        m_ButtonUnsortGrid.addActionListener(this);
     }
     
     /**
      * Esta funcion agrega los botones necesarios para jugar Taquin. El numero de botones agregados depende del tamaño del tablero escogido.
+     * @param option verdadero si se quiere crear un tablero organizado, falso si se quiere crear un tablero aleatorio.
      */
-    private void addButtons()
+    private void addButtons(boolean option)
     {
-        for (JButton b : m_Buttons)
+        if(option)// Cualquier operación excepto la de desordenar
         {
-            ImageIcon i = (ImageIcon) b.getIcon();
-            i.getImage().flush(); // Flush para clear el cache de la imagen. Sino se sigue mostrando la imagen anterior.
+            for (JButton b : m_Buttons)
+            {
+                ImageIcon i = (ImageIcon) b.getIcon();
+                i.getImage().flush(); // Flush para clear el cache de la imagen. Sino se sigue mostrando la imagen anterior.
+            }
+
+            m_Buttons.clear();
+
+            try {
+                ImageSplitter.Split(m_FileName, n, n);
+            } catch (IOException ex) {
+                Logger.getLogger(TaquinUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+
+            for (int i = 0; i < (n * n)-1; ++i)
+            {
+                //Las imagenes son opcionales
+                JButton button = new JButton(Integer.toString(i), new StretchIcon("images/" + Integer.toString(i+1) + ".jpg"));
+                m_Buttons.add(button);
+                m_Buttons.get(i).addActionListener(new java.awt.event.ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        TaquinUI.this.buttonPerformed(e);
+                    }
+                });
+
+                m_PanelGridTaquin.add(m_Buttons.get(i));
+            }
         }
-        
-        m_Buttons.clear();
-        
-        try {
-            ImageSplitter.Split(m_FileName, n, n);
-        } catch (IOException ex) {
-            Logger.getLogger(TaquinUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-        for (int i = 0; i < (n * n)-1; ++i)
+        else//Opción de desordenar
         {
-            //Las imagenes son opcionales
-            JButton button = new JButton(Integer.toString(i), new StretchIcon("images/" + Integer.toString(i+1) + ".jpg"));
-            m_Buttons.add(button);
-            m_Buttons.get(i).addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    TaquinUI.this.buttonPerformed(e);
+            int[] temp_array = new int [n*n];
+            int cont = 1, pos;
+            Random rn = new Random();
+            for(int i=0; i<n*n; i++)
+            {
+                temp_array[i]=0;
+            }
+            while(cont < n*n)
+            {
+                pos = rn.nextInt(n*n-1);
+                if(temp_array[pos]==0)
+                {
+                    temp_array[pos]=cont;
+                    cont++;
                 }
-            });
+            }
             
-            m_PanelGridTaquin.add(m_Buttons.get(i));
+            //m_Buttons.clear();
+            
+            for (int i = 0; i < (n * n)-1; ++i)
+            {
+                //Las imagenes son opcionales
+                JButton button = new JButton(Integer.toString(temp_array[i]-1), new StretchIcon("images/" + Integer.toString(temp_array[i]) + ".jpg"));
+                m_Buttons.set(temp_array[i]-1,button);
+                m_Buttons.get(temp_array[i]-1).addActionListener(new java.awt.event.ActionListener() {
+                
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        TaquinUI.this.buttonPerformed(e);
+                    }
+                });
+
+                
+                m_PanelGridTaquin.add(m_Buttons.get(temp_array[i]-1));
+                
+                m_MatrixButtons.get(Integer.parseInt(button.getText())).clear();
+                m_MatrixButtons.get(Integer.parseInt(button.getText())).put(i/n,i%n);
+                
+                m_MatrixGrid[i/n][i%n]=temp_array[i]-1;
+
+            }
         }
+
     }
     
     /**
@@ -350,7 +402,7 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
                 File file = m_FileChooser.getSelectedFile();
                 m_FileName = file.getAbsolutePath();
 
-                resetGrid();
+                resetGrid(true);
                 
                 System.out.println("Se escogió el archivo: " + m_FileName);
             }
@@ -362,25 +414,24 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
         }
         else if (e.getSource() == m_ButtonSolve)
         {
-            //TODO: implementar
             solve();
         }
         else if (e.getSource() == m_ButtonUnsortGrid)
         {
-            //TODO: implementar
+            resetGrid(false);
         }
     }
 
     /**
      * Repinta los botones del Taquin. Cada vez que el tablero cambia de tamaño se llama esta funcion.
      */
-    private void resetGrid() {
+    private void resetGrid(boolean option) {
         m_PanelGridTaquin.removeAll();
         m_PanelGridTaquin.setLayout(new GridLayout(n, n, 0, 0));
         
         initMatrix();
         
-        addButtons();
+        addButtons(option);
         
         m_PanelGridTaquin.revalidate();
         m_PanelGridTaquin.repaint();
@@ -399,7 +450,8 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
             System.out.print(i + " ");
         }
         System.out.println("");
-        solveTaquin(movimientos);
+        ThreadButton th = new ThreadButton(n, movimientos, m_Buttons, m_MatrixGrid, m_MatrixButtons);
+        th.start();
     }
 
     /**
@@ -409,61 +461,6 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
         players.add(new Player1());
         
         //Agregar jugadores adicionales aqui
-    }
-
-    private void solveTaquin(ArrayList<Integer> movimientos) {
-        
-        for (int i = 0; i < movimientos.size(); ++i)
-        {
-            JButton button = m_Buttons.get(movimientos.get(i));
-            int r = Integer.parseInt(button.getText())/n;
-            int c = Integer.parseInt(button.getText())%n;
-            
-            
-            if( r!=0 && m_MatrixGrid[r-1][c]==-1){ // UP
-            System.out.println("arriba");
-            m_MatrixGrid[r-1][c] = m_MatrixGrid[r][c];
-            m_MatrixGrid[r][c] = -1;
-            m_MatrixButtons.get(Integer.parseInt(button.getText())).clear();
-            m_MatrixButtons.get(Integer.parseInt(button.getText())).put(r-1,c);
-            button.setLocation(button.getX(), button.getY() - button.getHeight());  // Movimiento hacia arriba
-            }else{
-                if( c!=0 && m_MatrixGrid[r][c-1]==-1){ // Left
-                    System.out.println("izquierda");
-                    m_MatrixGrid[r][c-1] = m_MatrixGrid[r][c];
-                    m_MatrixGrid[r][c] = -1;
-                    m_MatrixButtons.get(Integer.parseInt(button.getText())).clear();
-                    m_MatrixButtons.get(Integer.parseInt(button.getText())).put(r,c-1);
-                    button.setLocation(button.getX() - button.getWidth(), button.getY());  // Movimiento hacia la izquierda
-                }else{
-                    if( r!=(n-1) && m_MatrixGrid[r+1][c]==-1){ // Down
-                        System.out.println("abajo");
-                        m_MatrixGrid[r+1][c] = m_MatrixGrid[r][c];
-                        m_MatrixGrid[r][c] = -1;
-                        m_MatrixButtons.get(Integer.parseInt(button.getText())).clear();
-                        m_MatrixButtons.get(Integer.parseInt(button.getText())).put(r+1,c);
-                        button.setLocation(button.getX(), button.getY()+button.getHeight());  // Movimiento hacia abajo
-                    }else{
-                        if( c!=(n-1) && m_MatrixGrid[r][c+1]==-1){ // Right
-                            System.out.println("derecha");
-                            m_MatrixGrid[r][c+1] = m_MatrixGrid[r][c];
-                            m_MatrixGrid[r][c] = -1;
-                            m_MatrixButtons.get(Integer.parseInt(button.getText())).clear();
-                            m_MatrixButtons.get(Integer.parseInt(button.getText())).put(r,c+1);
-                            button.setLocation(button.getX() + button.getWidth(), button.getY());  // Movimiento hacia la derecha
-                        }
-                    }
-                }
-            }
-            
-            //TODO: ver los movimientos uno por uno
-            
-            try { 
-                Thread.sleep(1000); //Dejar un tiempo entre cada iteracion para poder ver los movimientos
-            } catch (InterruptedException ex) {
-                Logger.getLogger(TaquinUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
