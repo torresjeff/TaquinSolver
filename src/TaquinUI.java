@@ -192,6 +192,7 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
     
     /**
      * Esta funcion agrega los botones necesarios para jugar Taquin. El numero de botones agregados depende del tamaño del tablero escogido.
+     * @param option verdadero si se quiere crear un tablero organizado, falso si se quiere crear un tablero aleatorio.
      */
     private void addButtons(boolean option)
     {
@@ -253,8 +254,8 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
                 //Las imagenes son opcionales
                 JButton button = new JButton(Integer.toString(temp_array[i]-1), new StretchIcon("images/" + Integer.toString(temp_array[i]) + ".jpg"));
                 m_Buttons.set(temp_array[i]-1,button);
-                m_Buttons.get(i).addActionListener(new java.awt.event.ActionListener() {
-                //m_Buttons.get(i).addActionListener(new java.awt.event.ActionListener() {
+                m_Buttons.get(temp_array[i]-1).addActionListener(new java.awt.event.ActionListener() {
+                
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         TaquinUI.this.buttonPerformed(e);
@@ -460,63 +461,6 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
         players.add(new Player1());
         
         //Agregar jugadores adicionales aqui
-    }
-
-    private void solveTaquin(ArrayList<Integer> movimientos) {
-        
-        System.out.println("movimientos size: " + movimientos.size());
-        
-        for (int i = 0; i < movimientos.size(); ++i)
-        {    
-            JButton button = m_Buttons.get(movimientos.get(i));
-            int r = Integer.parseInt(button.getText())/n;
-            int c = Integer.parseInt(button.getText())%n;
-            
-            
-            if( r!=0 && m_MatrixGrid[r-1][c]==-1){ // UP
-                System.out.println("arriba");
-                m_MatrixGrid[r-1][c] = m_MatrixGrid[r][c];
-                m_MatrixGrid[r][c] = -1;
-                m_MatrixButtons.get(Integer.parseInt(button.getText())).clear();
-                m_MatrixButtons.get(Integer.parseInt(button.getText())).put(r-1,c);
-                button.setLocation(button.getX(), button.getY() - button.getHeight());  // Movimiento hacia arriba
-            }else{
-                if( c!=0 && m_MatrixGrid[r][c-1]==-1){ // Left
-                    System.out.println("izquierda");
-                    m_MatrixGrid[r][c-1] = m_MatrixGrid[r][c];
-                    m_MatrixGrid[r][c] = -1;
-                    m_MatrixButtons.get(Integer.parseInt(button.getText())).clear();
-                    m_MatrixButtons.get(Integer.parseInt(button.getText())).put(r,c-1);
-                    button.setLocation(button.getX() - button.getWidth(), button.getY());  // Movimiento hacia la izquierda
-                }else{
-                    if( r!=(n-1) && m_MatrixGrid[r+1][c]==-1){ // Down
-                        System.out.println("abajo");
-                        m_MatrixGrid[r+1][c] = m_MatrixGrid[r][c];
-                        m_MatrixGrid[r][c] = -1;
-                        m_MatrixButtons.get(Integer.parseInt(button.getText())).clear();
-                        m_MatrixButtons.get(Integer.parseInt(button.getText())).put(r+1,c);
-                        button.setLocation(button.getX(), button.getY()+button.getHeight());  // Movimiento hacia abajo
-                    }else{
-                        if( c!=(n-1) && m_MatrixGrid[r][c+1]==-1){ // Right
-                            System.out.println("derecha");
-                            m_MatrixGrid[r][c+1] = m_MatrixGrid[r][c];
-                            m_MatrixGrid[r][c] = -1;
-                            m_MatrixButtons.get(Integer.parseInt(button.getText())).clear();
-                            m_MatrixButtons.get(Integer.parseInt(button.getText())).put(r,c+1);
-                            button.setLocation(button.getX() + button.getWidth(), button.getY());  // Movimiento hacia la derecha
-                        }
-                    }
-                }
-            }
-            
-            //TODO: ver los movimientos uno por uno
-            
-            try { 
-                Thread.sleep(1000); //Dejar un tiempo entre cada iteracion para poder ver los movimientos
-            } catch (InterruptedException ex) {
-                Logger.getLogger(TaquinUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
