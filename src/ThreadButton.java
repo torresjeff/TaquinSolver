@@ -39,6 +39,15 @@ public class ThreadButton extends Thread implements Runnable{
         while(i < array.size()){
             JButton button = m_Buttons.get(array.get(i));
             
+            for (int j = 0; j < n; ++j)
+            {
+                for (int k = 0; k < n; ++k)
+                {
+                    System.out.print(m_MatrixGrid[j][k] + "\t");
+                }
+                System.out.println("");
+            }
+            
             Set<Integer> set = m_MatrixButtons.get(Integer.parseInt(button.getText())).keySet();
             int r = (Integer)(set.toArray())[0];
             int c = m_MatrixButtons.get(Integer.parseInt(button.getText())).get(r);
@@ -46,12 +55,12 @@ public class ThreadButton extends Thread implements Runnable{
             System.out.println("r="+r+",c="+c);
             
             if( r!=0 && m_MatrixGrid[r-1][c]==-1){ // UP
-            System.out.println("arriba");
-            m_MatrixGrid[r-1][c] = m_MatrixGrid[r][c];
-            m_MatrixGrid[r][c] = -1;
-            m_MatrixButtons.get(Integer.parseInt(button.getText())).clear();
-            m_MatrixButtons.get(Integer.parseInt(button.getText())).put(r-1,c);
-            button.setLocation(button.getX(), button.getY() - button.getHeight());  // Movimiento hacia arriba
+                System.out.println("arriba");
+                m_MatrixGrid[r-1][c] = m_MatrixGrid[r][c];
+                m_MatrixGrid[r][c] = -1;
+                m_MatrixButtons.get(Integer.parseInt(button.getText())).clear();
+                m_MatrixButtons.get(Integer.parseInt(button.getText())).put(r-1,c);
+                button.setLocation(button.getX(), button.getY() - button.getHeight());  // Movimiento hacia arriba
             }else{
                 
                 if( c!=0 && m_MatrixGrid[r][c-1]==-1){ // Left
@@ -82,7 +91,7 @@ public class ThreadButton extends Thread implements Runnable{
                 }
             }
             try {
-                Thread.sleep(500);
+                Thread.sleep(3000);
                 i++;
             } catch (InterruptedException ex) {
                 Logger.getLogger(ThreadButton.class.getName()).log(Level.SEVERE, null, ex);
