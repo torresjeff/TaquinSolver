@@ -441,7 +441,7 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
      * Resuelve el tablero actual segun el jugador que esta escogido.
      */
     private void solve() {
-        ArrayList<Integer> movimientos = players.get(m_CurrentPlayer).solve(m_MatrixGrid, n);
+        ArrayList<Integer> movimientos = players.get(m_CurrentPlayer).solve(deepCopyIntMatrix(m_MatrixGrid), n);
         
         System.out.print("Movimientos para solucionar el tablero: ");
         
@@ -450,8 +450,27 @@ public class TaquinUI extends javax.swing.JFrame implements ActionListener
             System.out.print(i + " ");
         }
         System.out.println("");
+        
         ThreadButton th = new ThreadButton(n, movimientos, m_Buttons, m_MatrixGrid, m_MatrixButtons);
         th.start();
+    }
+    
+    /**
+     * Hacemos una copia del tablero para pasarselo a la clase que implemente la funcion solve. Esto lo hacemos con el fin de que no se cambien los valores
+     * del tablero de TaquinUI.
+     * @param input matriz a clonar
+     * @return matriz con los mismos valores pero una referencia diferente.
+     */
+    int[][] deepCopyIntMatrix(int[][] input) {
+        if (input == null)
+            return null;
+        int[][] result = new int[input.length][];
+        
+        for (int r = 0; r < input.length; r++) {
+            result[r] = input[r].clone();
+        }
+        
+        return result;
     }
 
     /**
