@@ -1,4 +1,6 @@
 # TaquinSolver
+### Juan Sebastián López, Miguel Ángel Montañez, Jeffrey Torres
+
 
 Para uso con Netbeans 8.0.2+.
 
