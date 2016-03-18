@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -37,8 +38,14 @@ public class ThreadButton extends Thread implements Runnable{
         int i = 0;
         while(i < array.size()){
             JButton button = m_Buttons.get(array.get(i));
-            int r = Integer.parseInt(button.getText())/n;
-            int c = Integer.parseInt(button.getText())%n;
+            
+            Set<Integer> set = m_MatrixButtons.get(Integer.parseInt(button.getText())).keySet();
+            int r = (Integer)(set.toArray())[0];
+            int c = m_MatrixButtons.get(Integer.parseInt(button.getText())).get(r);
+            
+            /*int r = Integer.parseInt(button.getText())/n;
+            int c = Integer.parseInt(button.getText())%n;*/
+            System.out.println("r="+r+",c="+c);
             
             if( r!=0 && m_MatrixGrid[r-1][c]==-1){ // UP
             System.out.println("arriba");
@@ -48,6 +55,7 @@ public class ThreadButton extends Thread implements Runnable{
             m_MatrixButtons.get(Integer.parseInt(button.getText())).put(r-1,c);
             button.setLocation(button.getX(), button.getY() - button.getHeight());  // Movimiento hacia arriba
             }else{
+                
                 if( c!=0 && m_MatrixGrid[r][c-1]==-1){ // Left
                     System.out.println("izquierda");
                     m_MatrixGrid[r][c-1] = m_MatrixGrid[r][c];
@@ -76,10 +84,19 @@ public class ThreadButton extends Thread implements Runnable{
                 }
             }
             try {
-                Thread.sleep(1000);
+                Thread.sleep(500);
                 i++;
             } catch (InterruptedException ex) {
                 Logger.getLogger(ThreadButton.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            for (int j = 0; j < n; ++j)
+            {
+                for (int k = 0; k < n; ++k)
+                {
+                    System.out.print(m_MatrixGrid[j][k] + "\t");
+                }
+                System.out.println("");
             }
         }
     }
